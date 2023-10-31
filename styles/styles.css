@@ -1,12 +1,13 @@
 :root {
     --primary: #ebebeb;
+    --dark:  #343434;
+    --shadow:#888888;
     --hover: #4800ff;
     --current: #3604b7;
-    --dark:  #343434;
 }
 
 .spacer{
-    height: 20px;
+    height: 30px;
 }
 
 .navbar-brand img {
@@ -30,7 +31,7 @@
 .navbar {
     background-color: var(--primary);
     border-bottom: 1px solid var(--dark);
-    box-shadow: 1px 2px 4px #888888;
+    box-shadow: 1px 2px 4px var(--shadow);
 }
 
 .footer{
