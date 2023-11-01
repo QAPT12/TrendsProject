@@ -1,15 +1,14 @@
 :root {
     --primary: #ebebeb;
+    --light: #f6f6f6;
     --dark:  #343434;
     --shadow:#888888;
     --hover: #4800ff;
-    --current: #3604b7;
-    --light: rgb(247, 247, 238);
-    
+    --current: #3604b7;  
 }
 
 .spacer{
-    height: 30px;
+    height: 20px;
 }
 
 .navbar-brand img {
@@ -66,4 +65,9 @@
 .post .vote-count{
     padding-left: 5px;
     font-weight: bold;
+}
+
+.new-post{
+    max-width: 80%;
+    margin: auto;
 }
