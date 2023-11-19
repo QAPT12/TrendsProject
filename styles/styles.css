@@ -1,0 +1,73 @@
+:root {
+    --primary: #ebebeb;
+    --light: #f6f6f6;
+    --dark:  #343434;
+    --shadow:#888888;
+    --hover: #4800ff;
+    --current: #3604b7;  
+}
+
+.spacer{
+    height: 20px;
+}
+
+.navbar-brand img {
+    height:50px;
+    padding-left:30px;
+}
+
+.navbar-nav li {
+    padding: 0 10px;
+}
+
+.navbar-nav li a {
+    float: right;
+    text-align: left;
+}
+
+.navbar ul li a:hover {
+    color: var(--hover)
+}
+
+.navbar {
+    background-color: var(--primary);
+    border-bottom: 1px solid var(--dark);
+    box-shadow: 1px 2px 4px var(--shadow);
+}
+
+.footer{
+    padding-top:50px;
+    text-align:center;
+}
+
+.card-header{
+    font-size: 150%;
+    font-weight: bold;
+}
+
+.post{
+    max-width: 75%;
+    margin: auto;
+}
+
+.post .card-header{
+    background-color: var(--light);
+}
+
+.post .card-header a{
+    text-decoration: none;
+}
+
+.post .card-footer{
+    background-color: white;
+}
+
+.post .vote-count{
+    padding-left: 5px;
+    font-weight: bold;
+}
+
+.new-post{
+    max-width: 80%;
+    margin: auto;
+}

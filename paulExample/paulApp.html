@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Page Title</title>
+        <link rel="stylesheet" href="app.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" defer></script>
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <h1>Express NoSQL interface Page</h1>
+            <h3>Exercising MongoDB</h3>
+
+            <label for="dbhost">Host Name:</label>
+            <input type="text" id="dbhost" value="localhost"><br>
+            <label for="dbport">Port:</label>
+            <input type="text" id="dbport" value="3000"><br>
+            <label for="dbident">Database:</label>
+            <input type="text" id="dbident" value="VSCodeTest">
+            <label for="dbconnect" id="dbstate">Not connected</label>
+            <button type="button" id="dbconnect">Connect</button>
+            <br>
+            <div id="queryArea"></div>
+            <span id="error"></span>
+
+            <button id = "submit">Submit</button>
+        </main>
+        
+    </body>
+</html>
