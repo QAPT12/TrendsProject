@@ -1,93 +1,92 @@
 // Client side application for making requests to the database server from the webpage
 // Used by new_post.html and paulApp.html
+// ---------------------------------------------------------
 
-$(document).ready (() => {
-    // hook up click event(s)
+var domain;
+var dbCollection;
 
-    var domain;
-    var dbCollection;
+const displayError = error => {
+    $("#error").html(`${error.message}`)
+}
 
-    const displayError = error => {
-        $("#error").html(`${error.message}`)
+/* Retrieve a JavaScript collection of a Mongodb database object containing Mongodb collections (tables). */
+const collectionAction = resp => {
+    console.log(resp); // result set, resp, should be JSON.
+    // make the selection list from the result set.
+    var s = $('<select id="collectionList" name="collectionList" />');
+    for(var val in resp) {
+        s.append($("<option />", {text: resp[val].name}));
+
     }
+    $("#queryArea").append('<label for="collectionList">Selected Collection:</label>');
+    $("#queryArea").append(s);
 
-    /* Retrieve a (JavaScript) collection of a (Mongodb) "collections". */
-    const collectionAction = resp => {
-        // console.log(resp); // result set, resp, should be JSON.
-        // make the selection list from the result set.
-        var s = $('<select id="collectionList" name="collectionList" />');
-        for(var val in resp) {
-            s.append($("<option />", {text: resp[val].name}));
+    // set the initial colletion
+    dbCollection = $("#collectionList").find(':selected').text();
 
-        }
-        $("#queryArea").append('<label for="collectionList">Selected Collection:</label>');
-        $("#queryArea").append(s);
-
-        // set the initial colletion
+    // create a handler if the selection is changed.
+    $("#collectionList").change( () => {
         dbCollection = $("#collectionList").find(':selected').text();
+    });
+}
 
-        // create a handler if the selection is changed.
-        $("#collectionList").change( () => {
-            dbCollection = $("#collectionList").find(':selected').text();
-        });
+/* connect/disconnect to/from a MongoDb database. */
+const connectAction = resp => {
+    console.log (resp);
+    if ($("#dbconnect").text() == "Connect" && resp == 'Success' || resp == 'Fail: Already connected to a database'){
+        $("#dbstate").text("Connected");
+        $("#dbconnect").text("Disconnect");
+
+        // Connection successful, now compose the queryArea div
+        // we need a list of database Collections.
+        fetch(domain+"getcollections")
+        .then (obj => obj.json() )
+        .then (data => collectionAction(data))
+        .catch (e => displayError (e));
+
     }
+    else if ($("#dbconnect").text() == "Disconnect" && resp == 'Success'){
+        $("#dbstate").text("Not Connected");
+        $("#dbconnect").text("Connect");
 
-    /* connect/disconnect to/from a MongoDb database. */
-    const connectAction = resp => {
-        console.log (resp);
-        if ($("#dbconnect").text() == "Connect" && resp == 'Success' || resp == 'Fail: Already connected to a database'){
-            $("#dbstate").text("Connected");
-            $("#dbconnect").text("Disconnect");
-
-            // Connection successful, now compose the queryArea div
-            // we need a list of database Collections.
-            fetch(domain+"getcollections")
-            .then (obj => obj.json() )
-            .then (data => collectionAction(data))
-            .catch (e => displayError (e));
-
-        }
-        else if ($("#dbconnect").text() == "Disconnect" && resp == 'Success'){
-            $("#dbstate").text("Not Connected");
-            $("#dbconnect").text("Connect");
-
-            //decompose the queryArea div
-            $("#queryArea").empty();
-        }
-        else{
-            displayError (resp);
-        }
+        //decompose the queryArea div
+        $("#queryArea").empty();
     }
+    else{
+        displayError (resp);
+    }
+}
 
-    $("#dbconnect").click (()=>{
+const toggleDatabaseConnection = () =>{
 
-        // connect/disconnect to the specified database
-        // send a message to "localhost:3000/connect/<database name>" or
-        // send a message to "localhost:3000/disconnect"
-        // Let's use the fetch API.
+    // connect/disconnect to the specified database
+    // send a message to "localhost:3000/connect/<database name>" or
+    // send a message to "localhost:3000/disconnect"
+    // Let's use the fetch API.
 
-        // var dbhost = $("#dbhost").val();
-        // var dbport = $("#dbport").val();
-        // var dbname = $("#dbident").val();
-        var dbhost = "localhost";
-        var dbport = "3000";
-        var dbname = "VSCodeTest";
+    // var dbhost = $("#dbhost").val();
+    // var dbport = $("#dbport").val();
+    // var dbname = $("#dbident").val();
+    var dbhost = "localhost";
+    var dbport = "3000";
+    var dbname = "test";
 
-        domain = `http://${dbhost}:${dbport}/`;
+    domain = `http://${dbhost}:${dbport}/`;
 
-        if ($("#dbconnect").text() == "Connect")
-            command = domain+`connect/${dbname}`;
-        else
-            command = domain+'disconnect';
+    if ($("#dbconnect").text() == "Connect")
+        command = domain+`connect/${dbname}`;
+    else
+        command = domain+'disconnect';
 
-        fetch(command)
-            .then (obj => obj.text() )
-            .then (data => connectAction(data))
-            .catch (e => displayError (e));
-        
-    })
+    fetch(command)
+        .then (obj => obj.text() )
+        .then (data => connectAction(data))
+        .catch (e => displayError (e));
+    
+};
 
-    $("#submit").click( () => {
+const submitThreadData = () => {
+    
         // Get the data from the input field
         var username = $("#username").val();
         var title = $("#title").val();
@@ -121,5 +120,12 @@ $(document).ready (() => {
             // Handle errors
             console.error('Error:', error);
         });
-    });
+};
+
+$(document).ready (() => {
+    // hook up click event(s)
+
+    $("#dbconnect").click(toggleDatabaseConnection);
+
+    $("#submit").click(submitThreadData);
 });
