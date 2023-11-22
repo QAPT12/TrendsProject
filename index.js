@@ -5,6 +5,8 @@
 const express = require('express');
 const cors = require('cors'); // this is required to prevent the server (this code) from rejecting fetch requests.
 const app = express();
+
+app.use(express.json());
 app.use(cors()); // necessary as per above.
 
 const database = require('./database.js');

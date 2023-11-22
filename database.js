@@ -82,7 +82,7 @@ router.post('/', (req, res) => {
 
 // Example server-side route using Express
 router.post('/addData', (req, res) => {
-   console.log(req.body);
+   console.log("Request object: ",req.body);
    const data = req.body.data;
    const username = req.body.username;
    const title = req.body.title;
@@ -92,15 +92,8 @@ router.post('/addData', (req, res) => {
    const collection = db.collection(collectionName);
 
    // Insert the data into the MongoDB collection
-   collection.insertOne({ data: data, username: username, title: title }, (err, result) => {
-       if (err) {
-           console.error('Error inserting data:', err);
-           res.status(500).send('Error inserting data');
-       } else {
-           console.log('Data inserted successfully:', result.ops);
-           res.send('Data inserted successfully');
-       }
-   });
+   collection.insertOne({ data: data, username: username, title: title });
+   res.send("Completed insert request!");
 });
 
 //export this router to use in our index.js

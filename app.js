@@ -1,8 +1,10 @@
 // Client side application for making requests to the database server from the webpage
 // Used by new_post.html and paulApp.html
 // ---------------------------------------------------------
-
-var domain;
+var dbhost = "localhost";
+var dbport = "3000";
+var dbname = "test";
+var domain = `http://${dbhost}:${dbport}/`;
 var dbCollection;
 
 const displayError = error => {
@@ -57,13 +59,10 @@ const connectAction = resp => {
     }
 }
 
+// connect/disconnect to the specified database
+// send a message to "localhost:3000/connect/<database name>" or
+// send a message to "localhost:3000/disconnect"
 const toggleDatabaseConnection = () =>{
-
-    // connect/disconnect to the specified database
-    // send a message to "localhost:3000/connect/<database name>" or
-    // send a message to "localhost:3000/disconnect"
-    // Let's use the fetch API.
-
     // var dbhost = $("#dbhost").val();
     // var dbport = $("#dbport").val();
     // var dbname = $("#dbident").val();
@@ -85,8 +84,24 @@ const toggleDatabaseConnection = () =>{
     
 };
 
-const submitThreadData = () => {
-    
+const connectToThreadsDB = () => {
+    console.log("connecting");
+    fetch(domain + `connect/${dbname}`)
+        .then (obj => obj.text() )
+        .then (data => connectAction(data))
+        .catch (e => displayError (e));
+}
+
+const disconnectThreadsDB = () => {
+    console.log("disconnecting");
+    fetch(domain + `disconnect`)
+        .then (obj => obj.text() )
+        .then (data => connectAction(data))
+        .catch (e => displayError (e));
+}
+
+function submitThreadData(event){
+        event.preventDefault();
         // Get the data from the input field
         var username = $("#username").val();
         var title = $("#title").val();
@@ -115,17 +130,26 @@ const submitThreadData = () => {
         .then(data => {
             // Handle the response, you might want to display a success message or handle errors
             console.log(data);
+            disconnectThreadsDB();
+            
         })
         .catch(error => {
             // Handle errors
-            console.error('Error:', error);
+            console.error('Error!!!:', error);
         });
 };
 
+// window.addEventListener('beforeunload', function (event) {
+//     // Perform cleanup or prevent navigation here
+//     // For example, you could prompt the user to confirm leaving the page
+//     // or return a string to display a confirmation dialog.
+//     event.preventDefault();
+//     // ...
+// });
+
 $(document).ready (() => {
     // hook up click event(s)
-
-    $("#dbconnect").click(toggleDatabaseConnection);
+    $("#dbconnect").click(connectToThreadsDB);
 
     $("#submit").click(submitThreadData);
 });
