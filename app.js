@@ -131,6 +131,7 @@ function submitThreadData(event){
             // Handle the response, you might want to display a success message or handle errors
             console.log(data);
             disconnectThreadsDB();
+            window.location.href = "about.html";
             
         })
         .catch(error => {
@@ -139,17 +140,10 @@ function submitThreadData(event){
         });
 };
 
-// window.addEventListener('beforeunload', function (event) {
-//     // Perform cleanup or prevent navigation here
-//     // For example, you could prompt the user to confirm leaving the page
-//     // or return a string to display a confirmation dialog.
-//     event.preventDefault();
-//     // ...
-// });
 
 $(document).ready (() => {
     // hook up click event(s)
-    $("#dbconnect").click(connectToThreadsDB);
+    connectToThreadsDB();
 
     $("#submit").click(submitThreadData);
 });
