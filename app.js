@@ -3,7 +3,7 @@
 // ---------------------------------------------------------
 var dbhost = "localhost";
 var dbport = "3000";
-var dbname = "test";
+var dbname = "ForumData";
 var domain = `http://${dbhost}:${dbport}/`;
 var dbCollection;
 
@@ -34,7 +34,7 @@ const collectionAction = resp => {
 
 /* connect/disconnect to/from a MongoDb database. */
 const connectAction = resp => {
-    console.log (resp);
+    console.log ("Connection Action Result:",resp);
     if ($("#dbconnect").text() == "Connect" && resp == 'Success' || resp == 'Fail: Already connected to a database'){
         $("#dbstate").text("Connected");
         $("#dbconnect").text("Disconnect");
@@ -57,35 +57,36 @@ const connectAction = resp => {
     else{
         displayError (resp);
     }
+    console.log("*".repeat(30));
 }
 
 // connect/disconnect to the specified database
 // send a message to "localhost:3000/connect/<database name>" or
 // send a message to "localhost:3000/disconnect"
-const toggleDatabaseConnection = () =>{
-    // var dbhost = $("#dbhost").val();
-    // var dbport = $("#dbport").val();
-    // var dbname = $("#dbident").val();
-    var dbhost = "localhost";
-    var dbport = "3000";
-    var dbname = "test";
+// const toggleDatabaseConnection = () =>{
+//     // var dbhost = $("#dbhost").val();
+//     // var dbport = $("#dbport").val();
+//     // var dbname = $("#dbident").val();
+//     var dbhost = "localhost";
+//     var dbport = "3000";
+//     var dbname = "test";
 
-    domain = `http://${dbhost}:${dbport}/`;
+//     domain = `http://${dbhost}:${dbport}/`;
 
-    if ($("#dbconnect").text() == "Connect")
-        command = domain+`connect/${dbname}`;
-    else
-        command = domain+'disconnect';
+//     if ($("#dbconnect").text() == "Connect")
+//         command = domain+`connect/${dbname}`;
+//     else
+//         command = domain+'disconnect';
 
-    fetch(command)
-        .then (obj => obj.text() )
-        .then (data => connectAction(data))
-        .catch (e => displayError (e));
+//     fetch(command)
+//         .then (obj => obj.text() )
+//         .then (data => connectAction(data))
+//         .catch (e => displayError (e));
     
-};
+// };
 
 const connectToThreadsDB = () => {
-    console.log("connecting");
+    console.log("Connecting");
     fetch(domain + `connect/${dbname}`)
         .then (obj => obj.text() )
         .then (data => connectAction(data))
@@ -93,7 +94,7 @@ const connectToThreadsDB = () => {
 }
 
 const disconnectThreadsDB = () => {
-    console.log("disconnecting");
+    console.log("Disconnecting");
     fetch(domain + `disconnect`)
         .then (obj => obj.text() )
         .then (data => connectAction(data))
@@ -130,7 +131,7 @@ function submitThreadData(event){
         .then(data => {
             // Handle the response, you might want to display a success message or handle errors
             console.log(data);
-            disconnectThreadsDB();
+            // disconnectThreadsDB();
             window.location.href = "about.html";
             
         })
@@ -139,6 +140,8 @@ function submitThreadData(event){
             console.error('Error!!!:', error);
         });
 };
+
+$(window).on('beforeunload', disconnectThreadsDB);
 
 
 $(document).ready (() => {
