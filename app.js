@@ -144,12 +144,12 @@ function submitThreadData(event){
         });
 };
 
-$(window).on('beforeunload', disconnectThreadsDB);
+// $(window).on('beforeunload', disconnectThreadsDB);
 
 
-$(document).ready (() => {
-    // hook up click event(s)
-    connectToThreadsDB();
+// $(document).ready (() => {
+//     // hook up click event(s)
+//     connectToThreadsDB();
 
-    $("#submit").click(submitThreadData);
-});
+//     $("#submit").click(submitThreadData);
+// });
