@@ -83,16 +83,20 @@ router.post('/', (req, res) => {
 // Example server-side route using Express
 router.post('/addData', (req, res) => {
    console.log("Request object: ",req.body);
-   const data = req.body.data;
+   // const data = req.body.data;
    const username = req.body.username;
    const title = req.body.title;
+   const content = req.body.content;
+   const score = req.body.score;
+   const creationDate = req.body.creationDate;
    const collectionName = req.body.collection;
+   
 
    // Assuming you have a MongoDB client (e.g., MongoDB Node.js driver) initialized
    const collection = db.collection(collectionName);
 
    // Insert the data into the MongoDB collection
-   collection.insertOne({ data: data, username: username, title: title });
+   collection.insertOne({username: username, title: title, content: content, score: score, creationDate: creationDate});
    res.send("Completed insert request!");
 });
 

@@ -56,20 +56,18 @@
                     
                     <div class="form-group">
                         <input type="text" class="form-control" id="title" placeholder="Title.">
-                        <button id="submit">Create New Post</button>
                     </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="content" placeholder="Thread Content">
+                    </div>
+                    <button id="submit">Create New Post</button>
                 </form>
 
-                <!-- <label for="dbhost">Host Name:</label>
-                <input type="text" id="dbhost" value="localhost"><br>
-                <label for="dbport">Port:</label>
-                <input type="text" id="dbport" value="3000"><br>
-                <label for="dbident">Database:</label>
-                <input type="text" id="dbident" value="VSCodeTest"> -->
                 <br>
                 <br>
-                <label for="dbconnect" id="dbstate">Not connected</label>
-                <button type="button" id="dbconnect">Connect</button>
+                <label hidden for="dbconnect" id="dbstate">Not connected</label>
+                <button hidden type="button" id="dbconnect">Connect</button>
                 <div id="queryArea"></div>
                 <span id="error"></span>
 

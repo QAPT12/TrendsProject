@@ -4,8 +4,9 @@
 var dbhost = "localhost";
 var dbport = "3000";
 var dbname = "ForumData";
+var dbCollection = "ThreadData";
 var domain = `http://${dbhost}:${dbport}/`;
-var dbCollection;
+
 
 const displayError = error => {
     $("#error").html(`${error.message}`)
@@ -23,13 +24,13 @@ const collectionAction = resp => {
     $("#queryArea").append('<label for="collectionList">Selected Collection:</label>');
     $("#queryArea").append(s);
 
-    // set the initial colletion
-    dbCollection = $("#collectionList").find(':selected').text();
+    // // set the initial colletion
+    // dbCollection = $("#collectionList").find(':selected').text();
 
-    // create a handler if the selection is changed.
-    $("#collectionList").change( () => {
-        dbCollection = $("#collectionList").find(':selected').text();
-    });
+    // // create a handler if the selection is changed.
+    // $("#collectionList").change( () => {
+    //     dbCollection = $("#collectionList").find(':selected').text();
+    // });
 }
 
 /* connect/disconnect to/from a MongoDb database. */
@@ -106,7 +107,7 @@ function submitThreadData(event){
         // Get the data from the input field
         var username = $("#username").val();
         var title = $("#title").val();
-        var data = "";
+        var content = $("#content").val();;
 
         // Construct the API endpoint for adding data to the database
         var addDataEndpoint = domain + "addData";
@@ -115,7 +116,9 @@ function submitThreadData(event){
         var postData = {
             username: username,
             title: title,
-            data: data,
+            content: content,
+            creationDate: new Date(),
+            score: 0,
             collection: dbCollection // Use the currently selected collection
         };
 
