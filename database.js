@@ -39,10 +39,15 @@ router.get('/connect/:dbname', async (req, res) => {
 });
 
 router.get ('/getcollections/', async (req, res) => {
-   console.log ("Asking for all collection names");
-   js = await db.listCollections().toArray();
-   console.log (js);
-   res.send (await db.listCollections().toArray());
+   try {
+      console.log ("Asking for all collection names");
+      js = await db.listCollections().toArray();
+      console.log (js);
+      res.send (await db.listCollections().toArray());
+   } catch (error) {
+      console.log("DB Error!:", error);
+   }
+   
 });
 
 // query a database

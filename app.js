@@ -3,8 +3,8 @@
 // ---------------------------------------------------------
 var dbhost = "localhost";
 var dbport = "3000";
-var dbname = "ForumData";
-var dbCollection = "ThreadData";
+// var dbname = "ForumData";
+// var dbCollection = "ThreadData";
 var domain = `http://${dbhost}:${dbport}/`;
 
 
@@ -36,28 +36,29 @@ const collectionAction = resp => {
 /* connect/disconnect to/from a MongoDb database. */
 const connectAction = resp => {
     console.log ("Connection Action Result:",resp);
-    if ($("#dbconnect").text() == "Connect" && resp == 'Success' || resp == 'Fail: Already connected to a database'){
-        $("#dbstate").text("Connected");
-        $("#dbconnect").text("Disconnect");
-
-        // Connection successful, now compose the queryArea div
-        // we need a list of database Collections.
-        fetch(domain+"getcollections")
+    fetch(domain+"getcollections")
         .then (obj => obj.json() )
         .then (data => collectionAction(data))
         .catch (e => displayError (e));
+    // if ($("#dbconnect").text() == "Connect" && resp == 'Success' || resp == 'Fail: Already connected to a database'){
+    //     $("#dbstate").text("Connected");
+    //     $("#dbconnect").text("Disconnect");
 
-    }
-    else if ($("#dbconnect").text() == "Disconnect" && resp == 'Success'){
-        $("#dbstate").text("Not Connected");
-        $("#dbconnect").text("Connect");
+    //     // Connection successful, now compose the queryArea div
+    //     // we need a list of database Collections.
+        
 
-        //decompose the queryArea div
-        $("#queryArea").empty();
-    }
-    else{
-        displayError (resp);
-    }
+    // }
+    // else if ($("#dbconnect").text() == "Disconnect" && resp == 'Success'){
+    //     $("#dbstate").text("Not Connected");
+    //     $("#dbconnect").text("Connect");
+
+    //     //decompose the queryArea div
+    //     $("#queryArea").empty();
+    // }
+    // else{
+    //     displayError (resp);
+    // }
     console.log("*".repeat(30));
 }
 
