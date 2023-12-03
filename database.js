@@ -50,16 +50,14 @@ router.get ('/getcollections/', async (req, res) => {
    
 });
 
-// query a database
+// gets all the data of a collection
 router.get('/query/:docname', async (req, res) => {
+   const requestedCollectionName = req.params.docname;
+   console.log("Querying " + requestedCollectionName);
 
-   console.log ("Querying " + req.params.docname);
-
-   const collection = db.collection(collectionname);
+   const collection = db.collection(requestedCollectionName);
    const data = await collection.find({}).toArray();
 
-   //console.log ("Data is");
-   // data.forEach ((item) => {console.log(JSON.stringify(item));});
    res.send(JSON.stringify(data));
 });
 
@@ -85,7 +83,6 @@ router.post('/', (req, res) => {
    res.send('POST route on things.');
 });
 
-// Example server-side route using Express
 router.post('/addData', (req, res) => {
    console.log("Request object: ",req.body);
    // const data = req.body.data;

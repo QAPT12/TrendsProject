@@ -7,60 +7,47 @@ var dbport = "3000";
 // var dbCollection = "ThreadData";
 var domain = `http://${dbhost}:${dbport}/`;
 
-
 const displayError = error => {
     $("#error").html(`${error.message}`)
 }
 
-/* Retrieve a JavaScript collection of a Mongodb database object containing Mongodb collections (tables). */
-const collectionAction = resp => {
-    console.log(resp); // result set, resp, should be JSON.
-    // make the selection list from the result set.
-    var s = $('<select id="collectionList" name="collectionList" />');
-    for(var val in resp) {
-        s.append($("<option />", {text: resp[val].name}));
-
-    }
-    $("#queryArea").append('<label for="collectionList">Selected Collection:</label>');
-    $("#queryArea").append(s);
-
-    // // set the initial colletion
-    // dbCollection = $("#collectionList").find(':selected').text();
-
-    // // create a handler if the selection is changed.
-    // $("#collectionList").change( () => {
-    //     dbCollection = $("#collectionList").find(':selected').text();
-    // });
-}
+const getCollectionData = (dbCollection) => {
+    console.log("Fetching Collection data from:", dbCollection);
+    // Make a fetch API call
+    return fetch(domain + "query/" + dbCollection)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // console.log('Data received from server:', data);
+            // Do something with the data
+            return data;
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+};
 
 /* connect/disconnect to/from a MongoDb database. */
 const connectAction = resp => {
-    console.log ("Connection Action Result:",resp);
-    fetch(domain+"getcollections")
-        .then (obj => obj.json() )
-        .then (data => collectionAction(data))
-        .catch (e => displayError (e));
-    // if ($("#dbconnect").text() == "Connect" && resp == 'Success' || resp == 'Fail: Already connected to a database'){
-    //     $("#dbstate").text("Connected");
-    //     $("#dbconnect").text("Disconnect");
-
-    //     // Connection successful, now compose the queryArea div
-    //     // we need a list of database Collections.
-        
-
-    // }
-    // else if ($("#dbconnect").text() == "Disconnect" && resp == 'Success'){
-    //     $("#dbstate").text("Not Connected");
-    //     $("#dbconnect").text("Connect");
-
-    //     //decompose the queryArea div
-    //     $("#queryArea").empty();
-    // }
-    // else{
-    //     displayError (resp);
-    // }
-    console.log("*".repeat(30));
-}
+    console.log("Connection Action Result:", resp);
+    return fetch(domain + "getcollections")
+        .then(obj => obj.json())
+        .then(data => {
+            // collectionAction(data);
+            return data; // Return the data from this block
+        })
+        .catch(e => {
+            displayError(e);
+            throw e; // Propagate the error further
+        })
+        .finally(() => {
+            console.log("*".repeat(30));
+        });
+};
 
 // connect/disconnect to the specified database
 // send a message to "localhost:3000/connect/<database name>" or
@@ -86,14 +73,19 @@ const connectAction = resp => {
 //         .catch (e => displayError (e));
     
 // };
-
 const connectToThreadsDB = () => {
     console.log("Connecting");
-    fetch(domain + `connect/${dbname}`)
-        .then (obj => obj.text() )
-        .then (data => connectAction(data))
-        .catch (e => displayError (e));
-}
+    return fetch(domain + `connect/${dbname}`)
+        .then(obj => obj.text())
+        .then(data => {
+            let collectionData = connectAction(data);
+            return collectionData;
+        })
+        .catch(e => {
+            displayError(e);
+            throw e;
+        });
+};
 
 const disconnectThreadsDB = () => {
     console.log("Disconnecting");
