@@ -7,6 +7,10 @@
     --current: #3604b7;  
 }
 
+.btn{
+    margin-right: .25em;
+}
+
 .spacer{
     height: 20px;
 }
@@ -48,6 +52,7 @@
 .post{
     max-width: 75%;
     margin: auto;
+    padding-top: 2em;
 }
 
 .post .card-header{
