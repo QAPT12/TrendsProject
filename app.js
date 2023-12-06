@@ -129,7 +129,7 @@ function submitThreadData(event){
             // Handle the response, you might want to display a success message or handle errors
             console.log(data);
             // disconnectThreadsDB();
-            window.location.href = "about.html";
+            window.location.href = "thread.html?data=" + encodeURIComponent("latest_post");
             
         })
         .catch(error => {
