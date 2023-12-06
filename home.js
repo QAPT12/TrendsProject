@@ -28,7 +28,7 @@ $(document).ready (() => {
                 cardHeader.classList.add("card-header");
                 // Link for the card header
                 cardTitle = document.createElement("a");
-                cardTitle.href = "#" // TODO: when jason has link working put here
+                cardTitle.href = "thread.html?data=" + encodeURIComponent(data[i]._id); // TODO: when jason has link working put here
                 cardTitle.innerHTML = data[i].title;
                 // Card body
                 cardBody = document.createElement("div");
