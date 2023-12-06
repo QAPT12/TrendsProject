@@ -112,6 +112,7 @@ function submitThreadData(event){
             content: content,
             creationDate: new Date(),
             score: 0,
+            comments: [],
             collection: dbCollection // Use the currently selected collection
         };
 

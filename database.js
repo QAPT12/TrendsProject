@@ -89,8 +89,9 @@ router.post('/addData', (req, res) => {
    const username = req.body.username;
    const title = req.body.title;
    const content = req.body.content;
-   const score = req.body.score;
    const creationDate = req.body.creationDate;
+   const score = req.body.score;
+   const comments = req.body.comments;
    const collectionName = req.body.collection;
    
 
@@ -98,7 +99,7 @@ router.post('/addData', (req, res) => {
    const collection = db.collection(collectionName);
 
    // Insert the data into the MongoDB collection
-   collection.insertOne({username: username, title: title, content: content, score: score, creationDate: creationDate});
+   collection.insertOne({username: username, title: title, content: content, score: score, creationDate: creationDate, comments: comments});
    res.send("Completed insert request!");
 });
 
