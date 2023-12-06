@@ -76,3 +76,7 @@
     max-width: 80%;
     margin: auto;
 }
+
+.new-post label{
+    text-align: right;
+}
