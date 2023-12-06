@@ -8,4 +8,10 @@ $(document).ready (() => {
     // hook up click event(s)
     connectToThreadsDB();
     $("#submit").click(submitThreadData);
+    // TODO: Quintin, ask noah about getting this to work
+    // $("#submit").click(function(){
+    //     if($("#title").value.length > 0 && $("#content").value.length){
+    //         submitThreadData();
+    //     }
+    // });
 });

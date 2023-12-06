@@ -51,18 +51,34 @@
                 Template for what the create post can look like
                 -->
                 <form class="new-post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="Enter username">
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="title" placeholder="Title.">
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-1 col-form-label">User: </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="username" placeholder="Enter Screen Name (optional)...">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="content" placeholder="Thread Content">
+                    <div class="spacer"></div>
+                    
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-1 col-form-label">Title: </label>
+                        <div class="col-sm-5">
+                            <input required type="text" class="form-control" id="title" placeholder="Enter Title For Post...">
+                        </div>
                     </div>
-                    <button id="submit">Create New Post</button>
+
+                    <div class="spacer"></div>
+
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-1 col-form-label">content: </label>
+                        <div class="col-sm-10">
+                            <textarea required class="form-control" rows="3" id="content" placeholder="Post Away..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="spacer" style="height:10px;"></div>
+                    
+                    <button class="btn btn-success" id="submit"><i class="fa-solid fa-circle-plus"></i> Create New Post</button>
                 </form>
 
                 <br>
