@@ -13,6 +13,7 @@
         <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" defer></script>
         <script src="app.js" defer></script>
         <script src="thread.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/mongodb@4.0.3/dist/mongodb.min.js" defer></script>
         <link rel="stylesheet" href="styles/styles.css">
     </head>
 
@@ -56,22 +57,14 @@
             <br>
              <!-- Comment Input Box -->
              <div class="comment-input-box">
-                 <textarea class="form-control" rows="3" placeholder="Add a comment"></textarea>
-                <button class="btn btn-primary">Post</button>
+                 <textarea id ="commentInput" class="form-control" rows="3" placeholder="Add a comment"></textarea>
+                <button id = "postButton" class="btn btn-primary">Post</button>
              </div>
              <br>
              <!-- Existing Comments -->
              <div class="existing-comments">
-                <h5>Comments:</h5>
                 <ul class="comments-list">
-                    <li>Sample Comment 1</li>
-                    <btn class="btn btn-success up-vote"><i class="fa-solid  fa-thumbs-up"></i></btn>
-                    <btn class="btn btn-primary down-vote"><i class="fa-solid fa-thumbs-down"></i></btn>
-                    <br>
-                    <li>Sample Comment 2</li>
-                    <btn class="btn btn-success up-vote"><i class="fa-solid  fa-thumbs-up"></i></btn>
-                    <btn class="btn btn-primary down-vote"><i class="fa-solid fa-thumbs-down"></i></btn>
-                    <br>
+                    
                 </ul>
              </div>
           </div>
@@ -82,3 +75,4 @@
 
 
 
+<!-- 657103fa2fa1f6a807ed218c -->
