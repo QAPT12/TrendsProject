@@ -16,15 +16,22 @@ $(document).ready (() => {
         console.log(dataFromConnectAction[0].name)
         getCollectionData(dbCollection).then(data => {
             console.log("Data:", data);
-            // // Get the query string from the current URL
-            // var queryString = window.location.search;
-            // // Create a new URLSearchParams object using the query string
-            // var params = new URLSearchParams(queryString);
-            // // Get the value of a specific parameter
-            // var param1Value = params.get('param1');
-            // // Log the values to the console
-            // console.log('param1:', param1Value);
-            let dataIndex = data.length-1;
+            var dataIndex;
+            const urlParams = new URLSearchParams(window.location.search);
+            const encodedData = urlParams.get('data');
+            const decodedData = decodeURIComponent(encodedData);
+            // Determine index coresponding to thread opened
+            if (decodedData == "latest_post"){
+                dataIndex = data.length-1;
+            }
+            else {
+                for(let i = 0; i < data.length; i++){
+                    if (data[i]._id == decodedData){
+                        console.log("MATCH!!!");
+                        dataIndex = i;
+                    }
+                }
+            }
             cardHeader = document.querySelector(".card-header");
             cardHeader.innerText = data[dataIndex].title;
             cardText = document.querySelector(".card-text");
