@@ -1,4 +1,6 @@
-$(window).on('beforeunload', disconnectThreadsDB);
+$(window).on('beforeunload',() => {
+    disconnectThreadsDB();
+} );
 
 $(document).ready (() => {
     console.log("home");

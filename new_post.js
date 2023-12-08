@@ -1,5 +1,3 @@
-$(window).on('beforeunload', disconnectThreadsDB);
-
 $(document).ready (() => {
     console.log("new_post");
     dbname = "ForumData";

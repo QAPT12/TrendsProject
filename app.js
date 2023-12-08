@@ -11,42 +11,36 @@ const displayError = error => {
     $("#error").html(`${error.message}`)
 }
 
-const getCollectionData = (dbCollection) => {
+const getCollectionData = async (dbCollection) => {
     console.log("Fetching Collection data from:", dbCollection);
     // Make a fetch API call
-    return fetch(domain + "query/" + dbCollection)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // console.log('Data received from server:', data);
-            // Do something with the data
-            return data;
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
+    try {
+        const response = await fetch(domain + "query/" + dbCollection);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
 };
 
 /* connect/disconnect to/from a MongoDb database. */
-const connectAction = resp => {
+const connectAction = async resp => {
     console.log("Connection Action Result:", resp);
-    return fetch(domain + "getcollections")
-        .then(obj => obj.json())
-        .then(data => {
-            // collectionAction(data);
-            return data; // Return the data from this block
-        })
-        .catch(e => {
+    try {
+        try {
+            const obj = await fetch(domain + "getcollections");
+            const data = await obj.json();
+            return data;
+        } catch (e) {
             displayError(e);
             throw e; // Propagate the error further
-        })
-        .finally(() => {
-            console.log("*".repeat(30));
-        });
+        }
+    } finally {
+        console.log("*".repeat(30));
+    }
 };
 
 // connect/disconnect to the specified database
@@ -73,29 +67,30 @@ const connectAction = resp => {
 //         .catch (e => displayError (e));
     
 // };
-const connectToThreadsDB = () => {
+const connectToThreadsDB = async () => {
     console.log("Connecting");
-    return fetch(domain + `connect/${dbname}`)
-        .then(obj => obj.text())
-        .then(data => {
-            let collectionData = connectAction(data);
-            return collectionData;
-        })
-        .catch(e => {
-            displayError(e);
-            throw e;
-        });
+    try {
+        const obj = await fetch(domain + `connect/${dbname}`);
+        const data = await obj.text();
+        let collectionData = connectAction(data);
+        return await collectionData;
+    } catch (e) {
+        displayError(e);
+        throw e;
+    }
 };
 
-const disconnectThreadsDB = () => {
+const disconnectThreadsDB = async () => {
     console.log("Disconnecting");
-    fetch(domain + `disconnect`)
-        .then (obj => obj.text() )
-        .then (data => connectAction(data))
-        .catch (e => displayError (e));
+    try {
+        await fetch(domain + `disconnect`);
+    } catch (e) {
+        displayError(e);
+        throw e;
+    }
 }
 
-function submitThreadData(event){
+async function submitThreadData(event){
         event.preventDefault();
         // Get the data from the input field
         var username = $("#username").val();
@@ -117,7 +112,7 @@ function submitThreadData(event){
         };
 
         // Use the fetch API to send a POST request to the server
-        fetch(addDataEndpoint, {
+        await fetch(addDataEndpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -126,24 +121,12 @@ function submitThreadData(event){
         })
         .then(response => response.text())
         .then(data => {
-            // Handle the response, you might want to display a success message or handle errors
-            console.log(data);
-            // disconnectThreadsDB();
-            window.location.href = "thread.html?data=" + encodeURIComponent("latest_post");
-            
+            console.log(data);        
         })
         .catch(error => {
             // Handle errors
             console.error('Error!!!:', error);
         });
+        await disconnectThreadsDB();
+        window.location.href = "thread.html?data=" + encodeURIComponent("latest_post");
 };
-
-// $(window).on('beforeunload', disconnectThreadsDB);
-
-
-// $(document).ready (() => {
-//     // hook up click event(s)
-//     connectToThreadsDB();
-
-//     $("#submit").click(submitThreadData);
-// });
