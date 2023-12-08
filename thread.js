@@ -40,13 +40,6 @@ $(document).ready (() => {
             voteCount.innerText = data[dataIndex].score;
             const postButton = document.getElementById('postButton');
             const commentInput = document.getElementById('commentInput');
-
-            // Add username if available
-            if(data[dataIndex].username != ""){
-                userName = document.createElement("p");
-                userName.innerHTML += "By User: " + data[dataIndex].username;
-                cardHeader.appendChild(userName);
-            }
         
             postButton.addEventListener('click', () => {
                 const newComment = commentInput.value;

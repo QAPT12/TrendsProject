@@ -40,7 +40,7 @@ $(document).ready (() => {
                 // Card body
                 cardBody = document.createElement("div");
                 cardBody.classList.add("card-body");
-                // Pee?
+                // create card text
                 cardText = document.createElement("p");
                 cardText.classList.add("card-text");
                 cardText.innerHTML = data[i].content;
@@ -57,12 +57,12 @@ $(document).ready (() => {
                 upImage = document.createElement("i");
                 upImage.classList.add("fa-solid");
                 upImage.classList.add("fa-thumbs-up");
-
+                // down button time
                 downButton = document.createElement("btn");
                 downButton.classList.add("btn");
                 downButton.classList.add("btn-primary");
                 downButton.classList.add("down-vote");
-                // up button image
+                // down button image
                 downImage = document.createElement("i");
                 downImage.classList.add("fa-solid");
                 downImage.classList.add("fa-thumbs-down");
@@ -70,12 +70,12 @@ $(document).ready (() => {
                 voteCount = document.createElement("span");
                 voteCount.classList.add("vote-count");
                 voteCount.innerHTML = data[i].score;
-                // put the spaghetti together
+                // put the spaghetti together. make sure to cook it good.
                 postarea.appendChild(postDiv);
                 postDiv.appendChild(cardDiv);
                 cardDiv.appendChild(cardHeader);
                 cardHeader.appendChild(cardTitle);
-                // Add username if available
+                // add in the user if we have it. Like adding mushrooms if everyone in the room like it.
                 if(data[i].username != ""){
                     cardHeader.appendChild(userName);
                 }
