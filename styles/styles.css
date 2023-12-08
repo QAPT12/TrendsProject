@@ -62,6 +62,10 @@
     text-decoration: none;
 }
 
+.post .card-header p{
+    font-size: 50%;
+}
+
 .post .card-footer{
     background-color: white;
 }

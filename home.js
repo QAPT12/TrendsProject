@@ -30,8 +30,13 @@ $(document).ready (() => {
                 cardHeader.classList.add("card-header");
                 // Link for the card header
                 cardTitle = document.createElement("a");
-                cardTitle.href = "thread.html?data=" + encodeURIComponent(data[i]._id); // TODO: when jason has link working put here
+                cardTitle.href = "thread.html?data=" + encodeURIComponent(data[i]._id); 
                 cardTitle.innerHTML = data[i].title;
+                // Add username if available
+                if(data[i].username != ""){
+                    userName = document.createElement("p");
+                    userName.innerHTML += "By User: " + data[i].username;
+                }
                 // Card body
                 cardBody = document.createElement("div");
                 cardBody.classList.add("card-body");
@@ -70,6 +75,10 @@ $(document).ready (() => {
                 postDiv.appendChild(cardDiv);
                 cardDiv.appendChild(cardHeader);
                 cardHeader.appendChild(cardTitle);
+                // Add username if available
+                if(data[i].username != ""){
+                    cardHeader.appendChild(userName);
+                }
                 cardDiv.appendChild(cardBody);
                 cardBody.appendChild(cardText);
                 cardDiv.appendChild(cardFooter);
