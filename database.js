@@ -6,6 +6,7 @@ var router = express.Router();
 router.use(express.json());
 
 const { MongoClient } = require("mongodb");
+const { ObjectId } = require('mongodb');
 
 const uri = "mongodb+srv://UnusualFrog:Password1@jstest.ixydzm5.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
@@ -106,19 +107,21 @@ router.post('/updateData/:id/addComment', async (req, res) => {
        const newComment = req.body.newComment;
        const collection = db.collection(req.body.collection);
 
+       console.log("0")
        // Find the document with the specified ID
-       const existingPost = await collection.findOne({ _id: ObjectId(postId) });
-
+       const existingPost = await collection.findOne({ _id: new ObjectId(postId) });
+      
+       console.log("1")
        if (!existingPost) {
            return res.status(404).send("Post not found");
        }
-
+       console.log("2")
        // Update the comments array by adding the new comment
        existingPost.comments.push(newComment);
 
        // Update the document in the MongoDB collection
        const result = await collection.updateOne(
-           { _id: ObjectId(postId) },
+           { _id: new ObjectId(postId) },
            { $set: { comments: existingPost.comments } }
        );
 
