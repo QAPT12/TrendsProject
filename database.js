@@ -1,6 +1,5 @@
 // Used by the database server (index.js) to perform GET and POST requests
 
-
 var express = require('express');
 var router = express.Router();
 
@@ -17,7 +16,7 @@ router.get('/', (req, res) => {
    res.send('GET route on things.');
 });
 
-// connect to a database
+// Connect to a database
 router.get('/connect/:dbname', async (req, res) => {
    if (db == null) {
       try {
@@ -38,6 +37,7 @@ router.get('/connect/:dbname', async (req, res) => {
    }
 });
 
+// Gets available collections
 router.get ('/getcollections/', async (req, res) => {
    try {
       console.log ("Asking for all collection names");
@@ -50,7 +50,7 @@ router.get ('/getcollections/', async (req, res) => {
    
 });
 
-// gets all the data of a collection
+// Gets all the data of a collection
 router.get('/query/:docname', async (req, res) => {
    const requestedCollectionName = req.params.docname;
    console.log("Querying " + requestedCollectionName);
@@ -61,9 +61,8 @@ router.get('/query/:docname', async (req, res) => {
    res.send(JSON.stringify(data));
 });
 
-// disconnect from a database
+// Disconnect from a database
 router.get('/disconnect/', async (req, res) => {
-   // disconnect from database
    if (db != null) {
       try {
          await client.close();
@@ -83,9 +82,9 @@ router.post('/', (req, res) => {
    res.send('POST route on things.');
 });
 
+// For creating new threads
 router.post('/addData', (req, res) => {
    console.log("Request object: ",req.body);
-   // const data = req.body.data;
    const username = req.body.username;
    const title = req.body.title;
    const content = req.body.content;
@@ -93,14 +92,45 @@ router.post('/addData', (req, res) => {
    const score = req.body.score;
    const comments = req.body.comments;
    const collectionName = req.body.collection;
-   
-
-   // Assuming you have a MongoDB client (e.g., MongoDB Node.js driver) initialized
    const collection = db.collection(collectionName);
 
    // Insert the data into the MongoDB collection
    collection.insertOne({username: username, title: title, content: content, score: score, creationDate: creationDate, comments: comments});
-   res.send("Completed insert request!");
+   res.send("Completed insert request into" + collectionName);
+});
+
+// For updating comments list
+router.post('/updateData/:id/addComment', async (req, res) => {
+   try {
+       const postId = req.params.id;
+       const newComment = req.body.newComment;
+       const collection = db.collection(req.body.collection);
+
+       // Find the document with the specified ID
+       const existingPost = await collection.findOne({ _id: ObjectId(postId) });
+
+       if (!existingPost) {
+           return res.status(404).send("Post not found");
+       }
+
+       // Update the comments array by adding the new comment
+       existingPost.comments.push(newComment);
+
+       // Update the document in the MongoDB collection
+       const result = await collection.updateOne(
+           { _id: ObjectId(postId) },
+           { $set: { comments: existingPost.comments } }
+       );
+
+       if (result.modifiedCount === 1) {
+           return res.send("Comment added successfully");
+       } else {
+           return res.status(500).send("Failed to add comment");
+       }
+   } catch (error) {
+       console.error("Error updating post:", error);
+       res.status(500).send("Internal Server Error");
+   }
 });
 
 //export this router to use in our index.js
