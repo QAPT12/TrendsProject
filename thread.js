@@ -97,6 +97,30 @@ async function addCommentToThread(event, postId, newComment) {
     }
 }
 
+async function increasePostScore(event, postId){
+    try {
+        // TODO: Ask noah for some help
+
+        document.getElementById("upVotePostButton").disabled = true;
+        document.getElementById("downVotePostButton").disabled = false;
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+async function decreasePostScore(event, postId){
+    try {
+        // TODO: Ask noah for some help
+
+        document.getElementById("upVotePostButton").disabled = false;
+        document.getElementById("downVotePostButton").disabled = true;
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
 $(document).ready (() => {
     console.log("home");
     dbname = "ForumData";
@@ -159,27 +183,21 @@ $(document).ready (() => {
                 };
             });
 
-            updateCommentsList(data, dataIndex);
-            // for (let i = 0; i < data[dataIndex].comments.length; i++){
-            //     let lineBreak = document.createElement("br");
-            //     let commentElement = document.createElement("li");
-            //     commentElement.innerText = data[dataIndex].comments[i];
-            //     let thumbsUpButton = document.createElement("button");
-            //     thumbsUpButton.className = 'btn btn-success up-vote';
-            //     let thumbsUpButtonIcon = document.createElement("i");
-            //     thumbsUpButtonIcon.className = 'fa-solid fa-thumbs-up';
-            //     let thumbsDownButton = document.createElement("button");
-            //     thumbsDownButton.className = 'btn btn-primary down-vote';
-            //     let thumbsDownButtonIcon = document.createElement("i");
-            //     thumbsDownButtonIcon.className = 'fa-solid fa-thumbs-down';
-            //     thumbsUpButton.appendChild(thumbsUpButtonIcon);
-            //     thumbsDownButton.appendChild(thumbsDownButtonIcon);
+            // Vote Button for post scores
+            const votePostUpButton = document.getElementById("upVotePostButton");
+            const votePostDownButton = document.getElementById("downVotePostButton");
 
-            //     commentSection.appendChild(commentElement);
-            //     commentSection.appendChild(lineBreak);
-            //     commentSection.appendChild(thumbsUpButton);
-            //     commentSection.appendChild(thumbsDownButton);
-            // };
+            votePostUpButton.addEventListener('click', (event) => {
+                increasePostScore(event, dataIndex);
+                
+            });
+
+            votePostDownButton.addEventListener('click', (event) => {
+                decreasePostScore(event, dataIndex);
+            
+            });
+
+            updateCommentsList(data, dataIndex);
         });
     })
     .catch(error => {
