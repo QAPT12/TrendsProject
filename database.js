@@ -107,15 +107,12 @@ router.post('/updateData/:id/addComment', async (req, res) => {
        const newComment = req.body.newComment;
        const collection = db.collection(req.body.collection);
 
-       console.log("0")
        // Find the document with the specified ID
        const existingPost = await collection.findOne({ _id: new ObjectId(postId) });
       
-       console.log("1")
        if (!existingPost) {
            return res.status(404).send("Post not found");
        }
-       console.log("2")
        // Update the comments array by adding the new comment
        existingPost.comments.push(newComment);
 

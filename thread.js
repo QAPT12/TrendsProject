@@ -41,28 +41,6 @@ function updateCommentsList(data, dataIndex) {
             commentDiv.appendChild(upVoteButton);
             commentDiv.appendChild(downVoteButton);
             
-
-
-
-
-            // let lineBreak = document.createElement("br");
-            // let commentElement = document.createElement("li");
-            // commentElement.innerText = data[dataIndex].comments[i];
-            // let thumbsUpButton = document.createElement("button");
-            // thumbsUpButton.className = 'btn btn-success up-vote';
-            // let thumbsUpButtonIcon = document.createElement("i");
-            // thumbsUpButtonIcon.className = 'fa-solid fa-thumbs-up';
-            // let thumbsDownButton = document.createElement("button");
-            // thumbsDownButton.className = 'btn btn-primary down-vote';
-            // let thumbsDownButtonIcon = document.createElement("i");
-            // thumbsDownButtonIcon.className = 'fa-solid fa-thumbs-down';
-            // thumbsUpButton.appendChild(thumbsUpButtonIcon);
-            // thumbsDownButton.appendChild(thumbsDownButtonIcon);
-
-            // commentSection.appendChild(commentElement);
-            // commentSection.appendChild(lineBreak);
-            // commentSection.appendChild(thumbsUpButton);
-            // commentSection.appendChild(thumbsDownButton);
         };
     }
 };
@@ -70,6 +48,33 @@ function updateCommentsList(data, dataIndex) {
 async function addCommentToThread(event, postId, newComment) {
     try {
         event.preventDefault();
+        
+        let commentSection = document.querySelector(".comments-list");
+        // comment div
+        commentDiv = document.createElement("div");
+        commentDiv.classList.add("comment");
+        // Comment text
+        commentText = document.createElement("p");
+        commentText.innerText =  newComment;
+        // up vote button
+        upVoteButton = document.createElement("button");
+        upVoteButton.className = 'btn btn-success up-vote';
+        // image for button
+        upVoteIcon = document.createElement("i");
+        upVoteIcon.className = 'fa-solid fa-thumbs-up';
+        upVoteButton.appendChild(upVoteIcon);
+        // down vote button
+        downVoteButton = document.createElement("button");
+        downVoteButton.className = 'btn btn-primary down-vote';
+        // image for button
+        downVoteIcon = document.createElement("i");
+        downVoteIcon.className = 'fa-solid fa-thumbs-down';
+        downVoteButton.appendChild(downVoteIcon);
+
+        commentSection.appendChild(commentDiv);
+        commentDiv.appendChild(commentText);
+        commentDiv.appendChild(upVoteButton);
+        commentDiv.appendChild(downVoteButton);
 
         // Construct the API endpoint for updating comments
         var updateCommentsEndpoint = domain + `updateData/${postId}/addComment`;
@@ -178,7 +183,7 @@ $(document).ready (() => {
                 if (newComment.trim() !== '') {
                     data[dataIndex].comments.push(newComment);
                     commentInput.value = '';
-                    updateCommentsList(data, dataIndex);
+                    // updateCommentsList(data, dataIndex);
                     addCommentToThread(event, data[dataIndex]._id, newComment)
                 };
             });
