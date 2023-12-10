@@ -2,7 +2,7 @@ $(window).on('beforeunload',() => {
     disconnectThreadsDB();
 } );
 
-// Updates the comment section to add any new comments
+// Updates the comment section to add any comments in the DB
 function updateCommentsList(data, dataIndex) {
     // Only run if comments not empty
     if (data[dataIndex].comments.length > 0){
@@ -45,10 +45,12 @@ function updateCommentsList(data, dataIndex) {
     }
 };
 
+// Add comment to database
 async function addCommentToThread(event, postId, newComment) {
     try {
         event.preventDefault();
         
+        // Add new comment to page
         let commentSection = document.querySelector(".comments-list");
         // comment div
         commentDiv = document.createElement("div");
@@ -70,7 +72,7 @@ async function addCommentToThread(event, postId, newComment) {
         downVoteIcon = document.createElement("i");
         downVoteIcon.className = 'fa-solid fa-thumbs-down';
         downVoteButton.appendChild(downVoteIcon);
-
+        // Add elements to page
         commentSection.appendChild(commentDiv);
         commentDiv.appendChild(commentText);
         commentDiv.appendChild(upVoteButton);
@@ -102,24 +104,33 @@ async function addCommentToThread(event, postId, newComment) {
     }
 }
 
-async function increasePostScore(event, postId){
+// Updates the score in the database and on the page
+async function updateScore(event, recordId, scoreToAdd) {
     try {
-        // TODO: Ask noah for some help
+        event.preventDefault();
 
-        document.getElementById("upVotePostButton").disabled = true;
-        document.getElementById("downVotePostButton").disabled = false;
+        // Construct the API endpoint for updating the score
+        var updateScoreEndpoint = domain + `updateData/${recordId}/updateScore`;
 
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
+        // Create a JSON object with the data to be added (score to add)
+        var scoreData = {
+            scoreToAdd: scoreToAdd,
+            collection: dbCollection,
+        };
 
-async function decreasePostScore(event, postId){
-    try {
-        // TODO: Ask noah for some help
-
-        document.getElementById("upVotePostButton").disabled = false;
-        document.getElementById("downVotePostButton").disabled = true;
+        // Use the fetch API to send a POST request to update the score
+        const response = await fetch(updateScoreEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(scoreData),
+        });
+        // Update score on page
+        voteCount = await document.querySelector(".vote-count");
+        voteCount.innerText = (parseInt(voteCount.innerText) + scoreToAdd);
+        const result = await response.text();
+        console.log(result);
 
     } catch (error) {
         console.error('Error:', error);
@@ -194,11 +205,13 @@ $(document).ready (() => {
 
             votePostUpButton.addEventListener('click', (event) => {
                 increasePostScore(event, dataIndex);
+                updateScore(event, data[dataIndex]._id, 1);
                 
             });
 
             votePostDownButton.addEventListener('click', (event) => {
                 decreasePostScore(event, dataIndex);
+                updateScore(event, data[dataIndex]._id, -1);
             
             });
 

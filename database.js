@@ -133,5 +133,40 @@ router.post('/updateData/:id/addComment', async (req, res) => {
    }
 });
 
+// For updating the score of a record
+router.post('/updateData/:id/updateScore', async (req, res) => {
+   try {
+       const recordId = req.params.id;
+       const scoreToAdd = req.body.scoreToAdd;
+       const collection = db.collection(req.body.collection);
+       console.log(2);
+       console.log(recordId);
+       // Find the document with the specified ID
+       const existingRecord = await collection.findOne({ _id: new ObjectId(recordId) });
+      
+       if (!existingRecord) {
+           return res.status(404).send("Record not found");
+       }
+
+       // Update the score by adding the new score value
+       existingRecord.score = (existingRecord.score || 0) + scoreToAdd;
+
+       // Update the document in the MongoDB collection
+       const result = await collection.updateOne(
+           { _id: new ObjectId(recordId) },
+           { $set: { score: existingRecord.score } }
+       );
+
+       if (result.modifiedCount === 1) {
+           return res.send("Score updated successfully");
+       } else {
+           return res.status(500).send("Failed to update score");
+       }
+   } catch (error) {
+       console.error("Error updating score:", error);
+       res.status(500).send("Internal Server Error");
+   }
+});
+
 //export this router to use in our index.js
 module.exports = router;
