@@ -11,6 +11,10 @@
     margin-right: .25em;
 }
 
+.up-vote, .down-vote{
+    width: 4em;
+}
+
 .spacer{
     height: 20px;
 }
@@ -82,4 +86,24 @@
 
 .new-post label{
     text-align: right;
+}
+
+.existing-comments{
+    border: solid 1px var(--shadow);
+    border-radius: 5px;
+    padding: .5em;
+}
+
+.existing-comments h5{
+    padding: .25em;
+    border-bottom: solid black .5px;
+}
+
+.existing-comments .comment{
+    width:80%;
+    border-bottom: solid 1px var(--shadow);
+    padding: .25em;
+    margin: 1em 0em;
+
+
 }

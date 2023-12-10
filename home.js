@@ -17,7 +17,7 @@ $(document).ready (() => {
             console.log("Data:", data);
 
             // Lettuce begin.
-            // For all the posts. We cook. Anyone who likes clean code, Look away now
+            // For all the posts. We cook. Anyone who likes clean code, Look away now.
             for(let i = 0; i < data.length; i ++){
                 // Make the post div
                 postDiv = document.createElement("div");
@@ -37,13 +37,26 @@ $(document).ready (() => {
                     userName = document.createElement("p");
                     userName.innerHTML += "By User: " + data[i].username;
                 }
+                // Add creation date
+                creationDate = document.createElement("p");
+                creationDate.innerHTML = "Date Posted: " + data[i].creationDate.substring(0, 10);
                 // Card body
                 cardBody = document.createElement("div");
                 cardBody.classList.add("card-body");
                 // create card text
                 cardText = document.createElement("p");
                 cardText.classList.add("card-text");
-                cardText.innerHTML = data[i].content;
+                // Split up the comment if its too long
+                let commentSplitArray = data[i].content.split(" ");
+                let comment = "";
+                let commentBreak = Math.min(commentSplitArray.length, 25);
+                for (let j = 0; j < commentBreak; j++){
+                    comment += commentSplitArray[j] + " ";
+                } 
+                if (commentBreak >= 25){
+                    comment += "...";
+                }
+                cardText.innerHTML = comment;
                 // card footer
                 cardFooter = document.createElement("div");
                 cardFooter.classList.add("card-footer");
@@ -79,6 +92,7 @@ $(document).ready (() => {
                 if(data[i].username != ""){
                     cardHeader.appendChild(userName);
                 }
+                cardHeader.appendChild(creationDate);
                 cardDiv.appendChild(cardBody);
                 cardBody.appendChild(cardText);
                 cardDiv.appendChild(cardFooter);

@@ -7,30 +7,62 @@ function updateCommentsList(data, dataIndex) {
     // Only run if comments not empty
     if (data[dataIndex].comments.length > 0){
         let commentSection = document.querySelector(".comments-list");
-        commentSection.innerHTML = '<h5>Comments:</h5><ul class="comments-list"></ul>';
+        
 
         console.log("Data is :",data);
         console.log("Data Index is :",dataIndex);
 
         for (let i = 0; i < data[dataIndex].comments.length; i++) {
-            let lineBreak = document.createElement("br");
-            let commentElement = document.createElement("li");
-            commentElement.innerText = data[dataIndex].comments[i];
-            let thumbsUpButton = document.createElement("button");
-            thumbsUpButton.className = 'btn btn-success up-vote';
-            let thumbsUpButtonIcon = document.createElement("i");
-            thumbsUpButtonIcon.className = 'fa-solid fa-thumbs-up';
-            let thumbsDownButton = document.createElement("button");
-            thumbsDownButton.className = 'btn btn-primary down-vote';
-            let thumbsDownButtonIcon = document.createElement("i");
-            thumbsDownButtonIcon.className = 'fa-solid fa-thumbs-down';
-            thumbsUpButton.appendChild(thumbsUpButtonIcon);
-            thumbsDownButton.appendChild(thumbsDownButtonIcon);
 
-            commentSection.appendChild(commentElement);
-            commentSection.appendChild(lineBreak);
-            commentSection.appendChild(thumbsUpButton);
-            commentSection.appendChild(thumbsDownButton);
+            // comment div
+            commentDiv = document.createElement("div");
+            commentDiv.classList.add("comment");
+            // add comment text
+            commentText = document.createElement("p");
+            commentText.innerText = data[dataIndex].comments[i];
+            // up vote button
+            upVoteButton = document.createElement("button");
+            upVoteButton.className = 'btn btn-success up-vote';
+            // image for button
+            upVoteIcon = document.createElement("i");
+            upVoteIcon.className = 'fa-solid fa-thumbs-up';
+            upVoteButton.appendChild(upVoteIcon);
+            // down vote button
+            downVoteButton = document.createElement("button");
+            downVoteButton.className = 'btn btn-primary down-vote';
+            // image for button
+            downVoteIcon = document.createElement("i");
+            downVoteIcon.className = 'fa-solid fa-thumbs-down';
+            downVoteButton.appendChild(downVoteIcon);
+
+            // Add it all together
+            commentSection.appendChild(commentDiv);
+            commentDiv.appendChild(commentText);
+            commentDiv.appendChild(upVoteButton);
+            commentDiv.appendChild(downVoteButton);
+            
+
+
+
+
+            // let lineBreak = document.createElement("br");
+            // let commentElement = document.createElement("li");
+            // commentElement.innerText = data[dataIndex].comments[i];
+            // let thumbsUpButton = document.createElement("button");
+            // thumbsUpButton.className = 'btn btn-success up-vote';
+            // let thumbsUpButtonIcon = document.createElement("i");
+            // thumbsUpButtonIcon.className = 'fa-solid fa-thumbs-up';
+            // let thumbsDownButton = document.createElement("button");
+            // thumbsDownButton.className = 'btn btn-primary down-vote';
+            // let thumbsDownButtonIcon = document.createElement("i");
+            // thumbsDownButtonIcon.className = 'fa-solid fa-thumbs-down';
+            // thumbsUpButton.appendChild(thumbsUpButtonIcon);
+            // thumbsDownButton.appendChild(thumbsDownButtonIcon);
+
+            // commentSection.appendChild(commentElement);
+            // commentSection.appendChild(lineBreak);
+            // commentSection.appendChild(thumbsUpButton);
+            // commentSection.appendChild(thumbsDownButton);
         };
     }
 };
@@ -98,6 +130,17 @@ $(document).ready (() => {
             // Build thread elements
             cardHeader = document.querySelector(".card-header");
             cardHeader.innerText = data[dataIndex].title;
+            // Add username if available.
+            if(data[dataIndex].username != ""){
+                userName = document.createElement("p");
+                userName.innerHTML += "By User: " + data[dataIndex].username;
+                cardHeader.appendChild(userName);
+            }
+            // Add creation date
+            creationDate = document.createElement("p");
+            creationDate.innerHTML = "Date Posted: " + data[dataIndex].creationDate.substring(0, 10);
+            cardHeader.appendChild(creationDate);
+
             cardText = document.querySelector(".card-text");
             cardText.innerText = data[dataIndex].content;
             voteCount = document.querySelector(".vote-count");
