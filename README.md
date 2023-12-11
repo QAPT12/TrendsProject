@@ -33,11 +33,11 @@
     - Express.js
     - MongoDB
 
-  ### Verson Control:
+  ### Version Control:
     - Git and Github
 
   ### Required Packages:
-    - cors
+    - CORS
     - MongoDB
     - Express
 
