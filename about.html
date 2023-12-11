@@ -1,92 +1,104 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <title>Title</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-        <script src="https://kit.fontawesome.com/46188fc76a.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="styles/styles.css">
-    </head>
+<head>
+    <title>About</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/46188fc76a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
 
-    <body>
-        <!-- navbar -->
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Image here</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="home.html"><i class="fa-solid fa-house"></i> Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="new_post.html"><i class="fa-solid fa-align-left"></i> New Post</a>
-                        </li>
-                        <li class="nav-item">
-                            <a style="color: var(--current)" class="nav-link" href="about.html"><i class="fa-solid fa-circle-info"></i> About</a>
-                        </li>
-                    </ul>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html"><i style="color: var(--hover);"
+                    class="fa-brands fa-2x fa-stack-exchange"> MTG</i></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html"><i class="fa-solid fa-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="new_post.html"><i class="fa-solid fa-align-left"></i> New Post</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="color: var(--current)" class="nav-link" href="about.html"><i
+                                class="fa-solid fa-circle-info"></i> About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- end navbar -->
+
+    <div class="main">
+        <div class="container-sm">
+
+            <div class="spacer"></div>
+
+            <div class="spacer"></div>
+
+            <!-- 
+                About details
+                -->
+            <div class="card">
+                <div class="card-header">Welcome!</div>
+                <div class="card-body">
+                    <h5 class="card-title">This site aims to give players a spot to ask questions about the game Magic:
+                        the Gathering.</h5>
+                    <p class="card-text">Ask questions about weird edge cases or rulings, or even the simple things that
+                        you want to check in on.
+                        Users can then respond to posts with the answer to the question, and using community voting, can
+                        vote on the quality of threads.
+                    </p>
+                    <p class="card-text">
+                        Got a question? Click the button below to make a post!
+                    </p>
+                    <p class="card-text">
+                        and most importantly, Have fun and be nice!
+                    </p>
+                    <a href="new_post.html" class="btn btn-success"><i class="fa-solid fa-circle-plus"></i> New Post</a>
                 </div>
             </div>
-        </nav>
-        <!-- end navbar -->
 
-        <div class="main">
-            <div class="container-sm">
-
-                <div class="spacer"></div>
-
-                <div class="spacer"></div>
-
-                <!-- 
-                little about card. not stuck to this idea can be changed and removed.
-                -->
-                <div class="card">
-                    <div class="card-header">Welcome!</div>
-                    <div class="card-body">
-                        <h5 class="card-title">This site aims to give players a spot to ask questions about the game Magic: the Gathering.</h5>
-                        <p class="card-text">Ask questions about weird edge cases or rulings, or even the simple things that you want to check in on.
-                            Users can then respond to posts with the answer to the question, and using community voting, can filter out any incorrect or bad responses.
-                        </p>
-                        <p class="card-text"> 
-                            Got a question? Click the button below to make a post! 
-                        </p> 
-                        <p class="card-text"> 
-                            and most importantly, Have fun and be nice!
-                        </p>
-                        <a href="new_post.html" class="btn btn-success"><i class="fa-solid fa-circle-plus"></i>  New Post</a>
-                    </div>
-                </div>
-
-                <!-- 
+            <!-- 
                 Footer for the web page.
-                I usually put my footers in tables just to make the formatting and spacing a bit easier, 
-                and they don't have to be nice and fancy.
                 -->
-                <table class="table table-borderless">
-                    <tr>
-                        <td>
-                            <div class="footer">
-                                <footer>
-                                    <p>Class project made by Noah, Quintin, and Jason.</p>
-                                    <p>Copyright &copy; 2023 | Here's where I would put our copyright if we actually had one.</p>
-                                </footer>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <!-- End Footer --> 
+            <table class="table table-borderless">
+                <tr>
+                    <td>
+                        <div class="footer">
+                            <footer>
+                                <p>Class project made by Noah, Quintin, and Jason.</p>
+                                <p>Copyright &copy; 2023 | Here's where I would put our copyright if we actually had
+                                    one.</p>
+                            </footer>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- End Footer -->
 
-            </div>
-        </div>  
+        </div>
+    </div>
 
-    </body>
+</body>
 
 </html>
