@@ -139,8 +139,7 @@ router.post('/updateData/:id/updateScore', async (req, res) => {
        const recordId = req.params.id;
        const scoreToAdd = req.body.scoreToAdd;
        const collection = db.collection(req.body.collection);
-       console.log(2);
-       console.log(recordId);
+
        // Find the document with the specified ID
        const existingRecord = await collection.findOne({ _id: new ObjectId(recordId) });
       

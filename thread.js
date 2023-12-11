@@ -129,6 +129,17 @@ async function updateScore(event, recordId, scoreToAdd) {
         // Update score on page
         voteCount = await document.querySelector(".vote-count");
         voteCount.innerText = (parseInt(voteCount.innerText) + scoreToAdd);
+
+        if (event.target.id == "upVotePostButton"){
+            document.getElementById("upVotePostButton").disabled = true;
+            document.getElementById("downVotePostButton").disabled = false;
+        }
+        else {
+            document.getElementById("upVotePostButton").disabled = false;
+            document.getElementById("downVotePostButton").disabled = true;
+        }
+        
+
         const result = await response.text();
         console.log(result);
 
@@ -204,13 +215,13 @@ $(document).ready (() => {
             const votePostDownButton = document.getElementById("downVotePostButton");
 
             votePostUpButton.addEventListener('click', (event) => {
-                increasePostScore(event, dataIndex);
+                // increasePostScore(event, dataIndex);
                 updateScore(event, data[dataIndex]._id, 1);
                 
             });
 
             votePostDownButton.addEventListener('click', (event) => {
-                decreasePostScore(event, dataIndex);
+                // decreasePostScore(event, dataIndex);
                 updateScore(event, data[dataIndex]._id, -1);
             
             });
