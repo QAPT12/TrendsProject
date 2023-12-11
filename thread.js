@@ -20,26 +20,9 @@ function updateCommentsList(data, dataIndex) {
             // add comment text
             commentText = document.createElement("p");
             commentText.innerText = data[dataIndex].comments[i];
-            // up vote button
-            upVoteButton = document.createElement("button");
-            upVoteButton.className = 'btn btn-success up-vote';
-            // image for button
-            upVoteIcon = document.createElement("i");
-            upVoteIcon.className = 'fa-solid fa-thumbs-up';
-            upVoteButton.appendChild(upVoteIcon);
-            // down vote button
-            downVoteButton = document.createElement("button");
-            downVoteButton.className = 'btn btn-primary down-vote';
-            // image for button
-            downVoteIcon = document.createElement("i");
-            downVoteIcon.className = 'fa-solid fa-thumbs-down';
-            downVoteButton.appendChild(downVoteIcon);
-
             // Add it all together
             commentSection.appendChild(commentDiv);
             commentDiv.appendChild(commentText);
-            commentDiv.appendChild(upVoteButton);
-            commentDiv.appendChild(downVoteButton);
             
         };
     }
@@ -58,25 +41,9 @@ async function addCommentToThread(event, postId, newComment) {
         // Comment text
         commentText = document.createElement("p");
         commentText.innerText =  newComment;
-        // up vote button
-        upVoteButton = document.createElement("button");
-        upVoteButton.className = 'btn btn-success up-vote';
-        // image for button
-        upVoteIcon = document.createElement("i");
-        upVoteIcon.className = 'fa-solid fa-thumbs-up';
-        upVoteButton.appendChild(upVoteIcon);
-        // down vote button
-        downVoteButton = document.createElement("button");
-        downVoteButton.className = 'btn btn-primary down-vote';
-        // image for button
-        downVoteIcon = document.createElement("i");
-        downVoteIcon.className = 'fa-solid fa-thumbs-down';
-        downVoteButton.appendChild(downVoteIcon);
         // Add elements to page
         commentSection.appendChild(commentDiv);
         commentDiv.appendChild(commentText);
-        commentDiv.appendChild(upVoteButton);
-        commentDiv.appendChild(downVoteButton);
 
         // Construct the API endpoint for updating comments
         var updateCommentsEndpoint = domain + `updateData/${postId}/addComment`;

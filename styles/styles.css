@@ -92,6 +92,7 @@
     border: solid 1px var(--shadow);
     border-radius: 5px;
     padding: .5em;
+    margin-bottom: 1em;
 }
 
 .existing-comments h5{

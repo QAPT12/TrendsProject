@@ -61,28 +61,10 @@ $(document).ready (() => {
                 cardFooter = document.createElement("div");
                 cardFooter.classList.add("card-footer");
                 cardFooter.classList.add("text-muted");
-                //button time
-                upButton = document.createElement("btn");
-                upButton.classList.add("btn");
-                upButton.classList.add("btn-success");
-                upButton.classList.add("up-vote");
-                // up button image
-                upImage = document.createElement("i");
-                upImage.classList.add("fa-solid");
-                upImage.classList.add("fa-thumbs-up");
-                // down button time
-                downButton = document.createElement("btn");
-                downButton.classList.add("btn");
-                downButton.classList.add("btn-primary");
-                downButton.classList.add("down-vote");
-                // down button image
-                downImage = document.createElement("i");
-                downImage.classList.add("fa-solid");
-                downImage.classList.add("fa-thumbs-down");
                 // vote count
                 voteCount = document.createElement("span");
                 voteCount.classList.add("vote-count");
-                voteCount.innerHTML = data[i].score;
+                voteCount.innerHTML = "Score: " + data[i].score;
                 // put the spaghetti together. make sure to cook it good.
                 postarea.appendChild(postDiv);
                 postDiv.appendChild(cardDiv);
@@ -96,10 +78,6 @@ $(document).ready (() => {
                 cardDiv.appendChild(cardBody);
                 cardBody.appendChild(cardText);
                 cardDiv.appendChild(cardFooter);
-                cardFooter.appendChild(upButton);
-                upButton.appendChild(upImage);
-                cardFooter.appendChild(downButton);
-                downButton.appendChild(downImage);
                 cardFooter.appendChild(voteCount);
 
                 
