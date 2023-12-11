@@ -11,7 +11,7 @@ const { ObjectId } = require('mongodb');
 const uri = "mongodb+srv://UnusualFrog:Password1@jstest.ixydzm5.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
-var db=null;
+var db = null;
 
 router.get('/', (req, res) => {
    res.send('GET route on things.');
@@ -26,29 +26,28 @@ router.get('/connect/:dbname', async (req, res) => {
          res.send("Success");
          console.log("Connected to MongoDB");
       }
-      catch (error){
-         console.log ("error connecting to DB");
-         res.send("Fail: "+ error.message);
+      catch (error) {
+         console.log("error connecting to DB");
+         res.send("Fail: " + error.message);
       }
       finally {
       }
    }
-   else{
+   else {
       res.send('Fail: Already connected to a database');
    }
 });
 
 // Gets available collections
-router.get ('/getcollections/', async (req, res) => {
+router.get('/getcollections/', async (req, res) => {
    try {
-      console.log ("Asking for all collection names");
+      console.log("Asking for all collection names");
       js = await db.listCollections().toArray();
-      console.log (js);
-      res.send (await db.listCollections().toArray());
+      res.send(await db.listCollections().toArray());
    } catch (error) {
       console.log("DB Error!:", error);
    }
-   
+
 });
 
 // Gets all the data of a collection
@@ -71,8 +70,8 @@ router.get('/disconnect/', async (req, res) => {
          res.send('Success');
          console.log("Connection to MongoDB closed");
       }
-      catch (error){
-         console.log ("error closing connection\n" + error);
+      catch (error) {
+         console.log("error closing connection\n" + error);
       }
       finally {
       }
@@ -85,7 +84,7 @@ router.post('/', (req, res) => {
 
 // For creating new threads
 router.post('/addData', (req, res) => {
-   console.log("Request object: ",req.body);
+   console.log("Request object: ", req.body);
    const username = req.body.username;
    const title = req.body.title;
    const content = req.body.content;
@@ -96,74 +95,74 @@ router.post('/addData', (req, res) => {
    const collection = db.collection(collectionName);
 
    // Insert the data into the MongoDB collection
-   collection.insertOne({username: username, title: title, content: content, score: score, creationDate: creationDate, comments: comments});
+   collection.insertOne({ username: username, title: title, content: content, score: score, creationDate: creationDate, comments: comments });
    res.send("Completed insert request into" + collectionName);
 });
 
 // For updating comments list
 router.post('/updateData/:id/addComment', async (req, res) => {
    try {
-       const postId = req.params.id;
-       const newComment = req.body.newComment;
-       const collection = db.collection(req.body.collection);
+      const postId = req.params.id;
+      const newComment = req.body.newComment;
+      const collection = db.collection(req.body.collection);
 
-       // Find the document with the specified ID
-       const existingPost = await collection.findOne({ _id: new ObjectId(postId) });
-      
-       if (!existingPost) {
-           return res.status(404).send("Post not found");
-       }
-       // Update the comments array by adding the new comment
-       existingPost.comments.push(newComment);
+      // Find the document with the specified ID
+      const existingPost = await collection.findOne({ _id: new ObjectId(postId) });
 
-       // Update the document in the MongoDB collection
-       const result = await collection.updateOne(
-           { _id: new ObjectId(postId) },
-           { $set: { comments: existingPost.comments } }
-       );
+      if (!existingPost) {
+         return res.status(404).send("Post not found");
+      }
+      // Update the comments array by adding the new comment
+      existingPost.comments.push(newComment);
 
-       if (result.modifiedCount === 1) {
-           return res.send("Comment added successfully");
-       } else {
-           return res.status(500).send("Failed to add comment");
-       }
+      // Update the document in the MongoDB collection
+      const result = await collection.updateOne(
+         { _id: new ObjectId(postId) },
+         { $set: { comments: existingPost.comments } }
+      );
+
+      if (result.modifiedCount === 1) {
+         return res.send("Comment added successfully");
+      } else {
+         return res.status(500).send("Failed to add comment");
+      }
    } catch (error) {
-       console.error("Error updating post:", error);
-       res.status(500).send("Internal Server Error");
+      console.error("Error updating post:", error);
+      res.status(500).send("Internal Server Error");
    }
 });
 
 // For updating the score of a record
 router.post('/updateData/:id/updateScore', async (req, res) => {
    try {
-       const recordId = req.params.id;
-       const scoreToAdd = req.body.scoreToAdd;
-       const collection = db.collection(req.body.collection);
+      const recordId = req.params.id;
+      const scoreToAdd = req.body.scoreToAdd;
+      const collection = db.collection(req.body.collection);
 
-       // Find the document with the specified ID
-       const existingRecord = await collection.findOne({ _id: new ObjectId(recordId) });
-      
-       if (!existingRecord) {
-           return res.status(404).send("Record not found");
-       }
+      // Find the document with the specified ID
+      const existingRecord = await collection.findOne({ _id: new ObjectId(recordId) });
 
-       // Update the score by adding the new score value
-       existingRecord.score = (existingRecord.score || 0) + scoreToAdd;
+      if (!existingRecord) {
+         return res.status(404).send("Record not found");
+      }
 
-       // Update the document in the MongoDB collection
-       const result = await collection.updateOne(
-           { _id: new ObjectId(recordId) },
-           { $set: { score: existingRecord.score } }
-       );
+      // Update the score by adding the new score value
+      existingRecord.score = (existingRecord.score || 0) + scoreToAdd;
 
-       if (result.modifiedCount === 1) {
-           return res.send("Score updated successfully");
-       } else {
-           return res.status(500).send("Failed to update score");
-       }
+      // Update the document in the MongoDB collection
+      const result = await collection.updateOne(
+         { _id: new ObjectId(recordId) },
+         { $set: { score: existingRecord.score } }
+      );
+
+      if (result.modifiedCount === 1) {
+         return res.send("Score updated successfully");
+      } else {
+         return res.status(500).send("Failed to update score");
+      }
    } catch (error) {
-       console.error("Error updating score:", error);
-       res.status(500).send("Internal Server Error");
+      console.error("Error updating score:", error);
+      res.status(500).send("Internal Server Error");
    }
 });
 

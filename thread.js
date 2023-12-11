@@ -1,46 +1,46 @@
-$(window).on('beforeunload',() => {
+// Disconnect from the DB when page is closing
+$(window).on('beforeunload', () => {
     disconnectThreadsDB();
-} );
+});
 
 // Updates the comment section to add any comments in the DB
 function updateCommentsList(data, dataIndex) {
     // Only run if comments not empty
-    if (data[dataIndex].comments.length > 0){
+    if (data[dataIndex].comments.length > 0) {
         let commentSection = document.querySelector(".comments-list");
-        
 
-        console.log("Data is :",data);
-        console.log("Data Index is :",dataIndex);
+        console.log("Data is :", data);
+        console.log("Data Index is :", dataIndex);
 
+        // Loop through comments and add each one
         for (let i = 0; i < data[dataIndex].comments.length; i++) {
 
-            // comment div
+            // Comment div
             commentDiv = document.createElement("div");
             commentDiv.classList.add("comment");
-            // add comment text
+            // Add comment text
             commentText = document.createElement("p");
             commentText.innerText = data[dataIndex].comments[i];
-            // Add it all together
+            // Append elements to page
             commentSection.appendChild(commentDiv);
             commentDiv.appendChild(commentText);
-            
         };
     }
 };
 
-// Add comment to database
+// Add comment to the DB
 async function addCommentToThread(event, postId, newComment) {
     try {
         event.preventDefault();
-        
-        // Add new comment to page
+
+        // Add new comment to the current page
         let commentSection = document.querySelector(".comments-list");
-        // comment div
+        // Comment div
         commentDiv = document.createElement("div");
         commentDiv.classList.add("comment");
         // Comment text
         commentText = document.createElement("p");
-        commentText.innerText =  newComment;
+        commentText.innerText = newComment;
         // Add elements to page
         commentSection.appendChild(commentDiv);
         commentDiv.appendChild(commentText);
@@ -93,11 +93,13 @@ async function updateScore(event, recordId, scoreToAdd) {
             },
             body: JSON.stringify(scoreData),
         });
-        // Update score on page
+
+        // Update score on the current page
         voteCount = await document.querySelector(".vote-count");
         voteCount.innerText = (parseInt(voteCount.innerText) + scoreToAdd);
 
-        if (event.target.id == "upVotePostButton"){
+        // Disabled whichever button was clicked
+        if (event.target.id == "upVotePostButton") {
             document.getElementById("upVotePostButton").disabled = true;
             document.getElementById("downVotePostButton").disabled = false;
         }
@@ -105,7 +107,6 @@ async function updateScore(event, recordId, scoreToAdd) {
             document.getElementById("upVotePostButton").disabled = false;
             document.getElementById("downVotePostButton").disabled = true;
         }
-        
 
         const result = await response.text();
         console.log(result);
@@ -115,88 +116,92 @@ async function updateScore(event, recordId, scoreToAdd) {
     }
 }
 
-$(document).ready (() => {
+$(document).ready(() => {
     console.log("home");
     dbname = "ForumData";
     dbCollection = "ThreadData";
 
-    // let commentSection = document.querySelector(".comments-list");
-    
+    // Connect to DB on page load
     connectToThreadsDB()
-    .then(dataFromConnectAction => {
-        // Access the returned data from connectAction
-        console.log("Data from connectAction:", dataFromConnectAction);
-        // console.log(dataFromConnectAction[0].name)
-        getCollectionData(dbCollection).then(data => {
-            console.log("Data:", data);
-            var dataIndex;
-            const urlParams = new URLSearchParams(window.location.search);
-            const encodedData = urlParams.get('data');
-            const decodedData = decodeURIComponent(encodedData);
-            // Determine index coresponding to thread opened
-            if (decodedData == "latest_post"){
-                dataIndex = data.length-1;
-            }
-            else {
-                for(let i = 0; i < data.length; i++){
-                    if (data[i]._id == decodedData){
-                        dataIndex = i;
+        .then(dataFromConnectAction => {
+            // Access the returned data from connectAction
+            console.log("Data from connectAction:", dataFromConnectAction);
+            getCollectionData(dbCollection).then(data => {
+                console.log("Data:", data);
+                var dataIndex;
+                const urlParams = new URLSearchParams(window.location.search);
+                const encodedData = urlParams.get('data');
+                const decodedData = decodeURIComponent(encodedData);
+
+                // Determine index coresponding to thread opened
+                if (decodedData == "latest_post") {
+                    dataIndex = data.length - 1;
+                }
+                else {
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i]._id == decodedData) {
+                            dataIndex = i;
+                        }
                     }
                 }
-            }
 
-            // Build thread elements
-            cardHeader = document.querySelector(".card-header");
-            cardHeader.innerText = data[dataIndex].title;
-            // Add username if available.
-            if(data[dataIndex].username != ""){
-                userName = document.createElement("p");
-                userName.innerHTML += "By User: " + data[dataIndex].username;
-                cardHeader.appendChild(userName);
-            }
-            // Add creation date
-            creationDate = document.createElement("p");
-            creationDate.innerHTML = "Date Posted: " + data[dataIndex].creationDate.substring(0, 10);
-            cardHeader.appendChild(creationDate);
+                // Build thread elements
+                cardHeader = document.querySelector(".card-header");
+                cardHeader.innerText = data[dataIndex].title;
 
-            cardText = document.querySelector(".card-text");
-            cardText.innerText = data[dataIndex].content;
-            voteCount = document.querySelector(".vote-count");
-            voteCount.innerText = data[dataIndex].score;
-            const postButton = document.getElementById('postButton');
-            const commentInput = document.getElementById('commentInput');
-        
-            // Add comment creation behavior
-            postButton.addEventListener('click', (event) => {
-                const newComment = commentInput.value;
-                if (newComment.trim() !== '') {
-                    data[dataIndex].comments.push(newComment);
-                    commentInput.value = '';
-                    // updateCommentsList(data, dataIndex);
-                    addCommentToThread(event, data[dataIndex]._id, newComment)
-                };
+                // Add username if available.
+                if (data[dataIndex].username != "") {
+                    userName = document.createElement("p");
+                    userName.innerHTML += "By User: " + data[dataIndex].username;
+                    cardHeader.appendChild(userName);
+                }
+                // Add creation date
+                creationDate = document.createElement("p");
+                creationDate.innerHTML = "Date Posted: " + data[dataIndex].creationDate.substring(0, 10);
+                cardHeader.appendChild(creationDate);
+
+                // Add content
+                cardText = document.querySelector(".card-text");
+                cardText.innerText = data[dataIndex].content;
+
+                // Add post score
+                voteCount = document.querySelector(".vote-count");
+                voteCount.innerText = data[dataIndex].score;
+
+                // Add comment box and post button
+                const postButton = document.getElementById('postButton');
+                const commentInput = document.getElementById('commentInput');
+
+                // Add comment creation behavior
+                postButton.addEventListener('click', (event) => {
+                    const newComment = commentInput.value;
+                    if (newComment.trim() !== '') {
+                        data[dataIndex].comments.push(newComment);
+                        commentInput.value = '';
+                        addCommentToThread(event, data[dataIndex]._id, newComment)
+                    };
+                });
+
+                // Vote Button for post scores
+                const votePostUpButton = document.getElementById("upVotePostButton");
+                const votePostDownButton = document.getElementById("downVotePostButton");
+
+                votePostUpButton.addEventListener('click', (event) => {
+                    updateScore(event, data[dataIndex]._id, 1);
+
+                });
+
+                votePostDownButton.addEventListener('click', (event) => {
+                    // decreasePostScore(event, dataIndex);
+                    updateScore(event, data[dataIndex]._id, -1);
+
+                });
+
+                // Populate stored comments on page load
+                updateCommentsList(data, dataIndex);
             });
-
-            // Vote Button for post scores
-            const votePostUpButton = document.getElementById("upVotePostButton");
-            const votePostDownButton = document.getElementById("downVotePostButton");
-
-            votePostUpButton.addEventListener('click', (event) => {
-                // increasePostScore(event, dataIndex);
-                updateScore(event, data[dataIndex]._id, 1);
-                
-            });
-
-            votePostDownButton.addEventListener('click', (event) => {
-                // decreasePostScore(event, dataIndex);
-                updateScore(event, data[dataIndex]._id, -1);
-            
-            });
-
-            updateCommentsList(data, dataIndex);
+        })
+        .catch(error => {
+            console.error("Error:", error);
         });
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
 });

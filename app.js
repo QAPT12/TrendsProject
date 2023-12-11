@@ -3,8 +3,6 @@
 // ---------------------------------------------------------
 var dbhost = "localhost";
 var dbport = "3000";
-// var dbname = "ForumData";
-// var dbCollection = "ThreadData";
 var domain = `http://${dbhost}:${dbport}/`;
 
 // Displays an error if connection fails
@@ -12,7 +10,7 @@ const displayError = error => {
     $("#error").html(`${error.message}`)
 }
 
-
+// Gets all the data from a specifed collection 
 const getCollectionData = async (dbCollection) => {
     console.log("Fetching Collection data from:", dbCollection);
     // Make a fetch API call
@@ -38,7 +36,7 @@ const connectAction = async resp => {
             return data;
         } catch (e) {
             displayError(e);
-            throw e; // Propagate the error further
+            throw e;
         }
     } finally {
         console.log("*".repeat(30));

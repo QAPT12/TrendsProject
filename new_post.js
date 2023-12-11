@@ -1,3 +1,6 @@
+// Submit thread data to be entered into the database
+// When data is submitted, disconnect from the database and redirect
+// to new thread page with thread data loaded and displayed
 async function submitThreadData(event){
     event.preventDefault();
     // Get the data from the input field
@@ -34,7 +37,10 @@ async function submitThreadData(event){
     .catch(error => {
         console.error('Error!!!:', error);
     });
+    // Disconnect from DB on write complete
     await disconnectThreadsDB();
+
+    // Redirect to new thread page
     window.location.href = "thread.html?data=" + encodeURIComponent("latest_post");
 };
 
@@ -43,7 +49,10 @@ $(document).ready (() => {
     dbname = "ForumData";
     dbCollection = "ThreadData";
 
+    // Connect to the DB on page load
     connectToThreadsDB();
+
+    // Submit thread data on click
     $("#submit").click(submitThreadData);
     // TODO: Quintin, ask noah about getting this to work
     // $("#submit").click(function(){

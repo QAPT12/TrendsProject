@@ -3,11 +3,11 @@
 // Check is running by visiting http://localhost:3000/
 
 const express = require('express');
-const cors = require('cors'); // this is required to prevent the server (this code) from rejecting fetch requests.
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
-app.use(cors()); // necessary as per above.
+app.use(cors());
 
 const database = require('./database.js');
 
