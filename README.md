@@ -1,31 +1,64 @@
-#Emerging Trends Group Final Project
+# MTG Threads
+## CP4485 Emerging Trends Group Final Project
 
-- Application Description:
+## Application Description:
   - This application is a thread-based communication platform meant to give players of the popular game "Magic: The Gathering", a place to communicate with other players in order to form strategies and decks.
+  - Developed as the group final project for the course CP4485 Emerging Trends in the College of the North Atlantic's [Software Development (Co-op)](https://www.cna.nl.ca/program/software-development-co-op#) course.
 
-- Application Set-Up:
-  - In order to run this application, after downloading the supplied files, simply open the files in an IDE and create a new terminal. Run the command "node index.js" in order to connect to the database, pulling all the data from the connected MongoDB. After this, running the "home.html" file will start the application from the home-page built using HTML, BootStrap, and Javascript running through Node and Express. The home page will display a list of posts with their title, content, user, date of creation, and a score on up-votes and down-votes with buttons attributed to them to determine the validity of the post. Clicking on any post will bring you to a thread unique to that post, containing all the data visible from the home-page, along with a section to post comments and view comments that have already been made along with their respective scores and voting buttons. Moving to the "New Post" tab will bring users to a screen that allows them to enter an optional username, title, and content for a post. After filling these fields, clicking the "Create New Post" button will push whatever data is entered to thr database, and perform another call in order to display the new post on the home screen. Navigating to the "About" tab will show users a screen with information on what the application is about, along with a button that will take you to the "New Post" tab. Any navigation to the home screen or one of the threads will perform a call to the database in order to display the relevant information.
+## Application Set-Up:
+- Clone the repository with 
+```
+    git clone https://github.com/QAPT12/TrendsProject
+```
+- Install the required packages
+```
+    npm install express
+    npm install cors
+    npm install mongodb
+```
+- Start the database server
+```
+    node index.js
+```
+- Open home.html in your browser of choice
   
-- Tech Section:
-  - Front-End:
+## Technology Used:
+  ### Front-End:
     - HTML
     - BootStrap
     - Javascript
 
-  - Back-End
+  ### Back-End
     - Node.js
     - Express.js
     - MongoDB
 
-  - Verson Control:
+  ### Verson Control:
     - Git and Github
 
-  - Required Packages:
+  ### Required Packages:
     - cors
     - MongoDB
     - Express
-            
-- Authors:
-  - Noah Forward
-  - Quintin Tuck
-  - Jason Somerton-Earle
+
+## Features
+### Home Page
+- The home page will display a list of thread posts with their title, content, user, date of creation, and a score on up-votes and down-votes. 
+- Clicking on any post will bring you to the thread page with all data related to the post, along with a section to post comments and view comments that have already been made.
+### New Post Page
+- The"New Post" tab will bring users to a screen that allows them to enter an (optional) username, title, and content for a post. 
+- After filling these fields, clicking the "Create New Post" button will push whatever data is entered to the database, and redirect to a thread page containing the new thread data.
+### About
+- Navigating to the "About" tab will show users a screen with information on what the application is about, along with a button that will take you to the "New Post" tab.
+### Database
+- Thread and comment data is drawn from and stored in a cloud-based MongoDB database.
+       
+## Authors:
+  - Noah Forward [@UnusualFrog](https://github.com/UnusualFrog)
+  - Quintin Tuck [@QAPT12](https://github.com/QAPT12)
+  - Jason Somerton-Earle [@goro391](https://github.com/goro391?tab=overview&from=2022-12-01&to=2022-12-31)
+
+
+## Acknowledgements
+ - Paul Dover for providing the base express connection application and for instructing the class
+ - The King 😉
