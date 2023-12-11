@@ -6,7 +6,20 @@ async function submitThreadData(event){
     // Get the data from the input field
     var username = $("#username").val();
     var title = $("#title").val();
-    var content = $("#content").val();;
+    var content = $("#content").val();
+
+    // Prevent post creation if title or content are empty
+    if (title.length == 0){
+        console.log("Error: Empty post title");
+        document.getElementById("error").textContent = "Error: Empty post title";
+        return;
+    }
+    if (content.length == 0){
+        console.log("Error: Empty post content");
+        document.getElementById("error").textContent = "Error: Empty post content";
+        return;
+    }
+    document.getElementById("error").textContent = "";
 
     // Construct the API endpoint for adding data to the database
     var addDataEndpoint = domain + "addData";
