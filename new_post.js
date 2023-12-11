@@ -67,10 +67,4 @@ $(document).ready (() => {
 
     // Submit thread data on click
     $("#submit").click(submitThreadData);
-    // TODO: Quintin, ask noah about getting this to work
-    // $("#submit").click(function(){
-    //     if($("#title").value.length > 0 && $("#content").value.length){
-    //         submitThreadData();
-    //     }
-    // });
 });
